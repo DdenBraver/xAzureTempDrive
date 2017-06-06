@@ -28,6 +28,7 @@ function Set-TargetResource
         [string]$DriveLetter   
     ) 
     
+    if ($DriveLetter.Length -gt 1){$DriveLetter = $DriveLetter[0]}
     $CurrentValue = (Get-TargetResource @PSBoundParameters).DriveLetter
 
     if ($currentvalue -ne $null) {
@@ -60,9 +61,10 @@ function Test-TargetResource
         [string]$DriveLetter
     ) 
     
+    if ($DriveLetter.Length -gt 1){$DriveLetter = $DriveLetter[0]}
     $CurrentValue = Get-TargetResource @PSBoundParameters
 
-    if ($CurrentValue.DriveLetter -like "$DriveLetter*") {
+    if ($CurrentValue.DriveLetter -like "$($DriveLetter):*") {
         return $true
     }
     else {

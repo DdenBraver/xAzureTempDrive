@@ -19,6 +19,10 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 * First version of the module
 
+### 1.0.0.1
+
+* minor update to filter the driveletter, if somebody specifies a full path (fe: 'N:\' instead of 'N')
+
 
 ## Examples
 
@@ -39,5 +43,5 @@ configuration Sample_xAzureTempDrive
         Driveletter = $Driveletter
     }
 }
-Sample_Sample_xAzureTempDrive -Driveletter 'Z'
+Sample_xAzureTempDrive -Driveletter 'Z'
 ```
