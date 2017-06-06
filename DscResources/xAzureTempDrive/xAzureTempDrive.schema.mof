@@ -1,0 +1,5 @@
+[ClassVersion("1.0.0.0"), FriendlyName("xAzureTempDrive")]
+class xAzureTempDrive: OMI_BaseResource
+{	
+	[key] string DriveLetter;
+};
