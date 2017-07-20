@@ -23,6 +23,10 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 * minor update to filter the driveletter, if somebody specifies a full path (fe: 'N:\' instead of 'N')
 
+### 1.0.0.2
+
+* Added additional check against volume name in Test-Targetresource
+
 
 ## Examples
 

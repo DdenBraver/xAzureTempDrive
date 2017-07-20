@@ -39,8 +39,10 @@ function Set-TargetResource
 
     else {
         $CurrentDriveLetter = (get-volume -FileSystemLabel "Temporary Storage").DriveLetter
-        write-verbose "Changing drive letter from [$CurrentDriveLetter] to [$DriveLetter]"
-        Get-Partition -DriveLetter $CurrentDriveLetter | Set-Partition -NewDriveLetter $DriveLetter
+        if ($CurrentDriveLetter -ne $DriveLetter) {
+            write-verbose "Changing drive letter from [$CurrentDriveLetter] to [$DriveLetter]"
+            Get-Partition -DriveLetter $CurrentDriveLetter | Set-Partition -NewDriveLetter $DriveLetter
+        }
         
         $DriveLetter = $DriveLetter + ":"
         $drive = Get-WmiObject -Class win32_volume -Filter “DriveLetter = '$DriveLetter'”
@@ -64,11 +66,17 @@ function Test-TargetResource
     if ($DriveLetter.Length -gt 1){$DriveLetter = $DriveLetter[0]}
     $CurrentValue = Get-TargetResource @PSBoundParameters
 
-    if ($CurrentValue.DriveLetter -like "$($DriveLetter):*") {
-        return $true
-    }
-    else {
+    if ($CurrentValue.DriveLetter -notlike "$($DriveLetter):*") {
         return $false
+    }
+
+    $CurrentDriveLetter = (get-volume -FileSystemLabel "Temporary Storage").DriveLetter
+    if ($CurrentDriveLetter -ne $DriveLetter) {
+        return $false
+    }
+
+    else {
+        return $true
     }
 } 
 
