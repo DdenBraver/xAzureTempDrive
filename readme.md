@@ -15,18 +15,23 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ## Versions
 
-### 1.0.0.0
+### 1.0.1.0
 
-* First version of the module
-
-### 1.0.0.1
-
-* minor update to filter the driveletter, if somebody specifies a full path (fe: 'N:\' instead of 'N')
+* Changed WMI to CIM
+* Added additional verbose logs
+* Removed unused variables
 
 ### 1.0.0.2
 
 * Added additional check against volume name in Test-Targetresource
 
+### 1.0.0.1
+
+* minor update to filter the driveletter, if somebody specifies a full path (fe: 'N:\' instead of 'N')
+
+### 1.0.0.0
+
+* First version of the module
 
 ## Examples
 
