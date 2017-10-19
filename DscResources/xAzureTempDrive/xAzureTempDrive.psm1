@@ -32,16 +32,19 @@ function Set-TargetResource
   $CurrentValue = (Get-TargetResource @PSBoundParameters).DriveLetter
 
   if ($currentvalue -ne $null) {
-    $pagefile = Get-CimInstance win32_pagefilesetting
-    Remove-CimInstance -InputObject $pagefile
+    $pagefiles = Get-CimInstance win32_pagefilesetting
+    foreach ($pagefile in $pagefiles) {
+        Remove-CimInstance -InputObject $pagefile
+    }
     $global:DSCMachineStatus = 1 
   }
 
   else {
-    $CurrentDriveLetter = (get-volume -FileSystemLabel "Temporary Storage").DriveLetter
+    $CurrentDriveLetter = (Get-CimInstance -Class Win32_LogicalDisk -Filter "VolumeName = 'Temporary Storage'").DeviceID.trimend(':')
+    $CurrentDrive = Get-CimInstance -Class win32_volume -Filter "DriveLetter = '$($CurrentDriveLetter):'"
+
     if ($CurrentDriveLetter -ne $DriveLetter) {
-      Write-Verbose "Changing drive letter from [$CurrentDriveLetter] to [$DriveLetter]"
-      Get-Partition -DriveLetter $CurrentDriveLetter | Set-Partition -NewDriveLetter $DriveLetter
+        Write-Verbose "Changing drive letter from [$CurrentDriveLetter] to [$DriveLetter]"
     }
         
     $DriveLetter = $DriveLetter + ":"

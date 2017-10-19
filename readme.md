@@ -15,6 +15,10 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ## Versions
 
+### 1.0.1.1
+
+* Added support for Server 2008(R2)
+
 ### 1.0.1.0
 
 * Changed WMI to CIM
