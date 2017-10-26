@@ -76,7 +76,7 @@ function Test-TargetResource
   }
 
   Write-Verbose -Message 'Testing Temporary Storage Driveletter' 
-  $CurrentDriveLetter = (get-volume -FileSystemLabel "Temporary Storage").DriveLetter
+  $CurrentDriveLetter = (Get-CimInstance -Class Win32_LogicalDisk -Filter "VolumeName = 'Temporary Storage'").DeviceID[0]
   if ($CurrentDriveLetter -ne $DriveLetter) {
     return $false
   }
