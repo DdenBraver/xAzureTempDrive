@@ -5,7 +5,7 @@
   (   
     [Parameter(Mandatory)] 
     [string]$DriveLetter
-  ) 
+  )
   
   Write-Verbose -Message 'Retrieving Pagefile settings'  
   $pagefile = Get-CimInstance win32_pagefilesetting
@@ -40,14 +40,16 @@ function Set-TargetResource
   }
 
   else {
-    $CurrentDriveLetter = (Get-CimInstance -Class Win32_LogicalDisk -Filter "VolumeName = 'Temporary Storage'").DeviceID.trimend(':')
-    $CurrentDrive = Get-CimInstance -Class win32_volume -Filter "DriveLetter = '$($CurrentDriveLetter):'"
+    $CurrentDriveLetter = (Get-CimInstance -Class Win32_LogicalDisk -Filter "VolumeName = 'Temporary Storage'").DeviceID
+    $CurrentDrive = Get-CimInstance -Class win32_volume -Filter "DriveLetter = '$($CurrentDriveLetter)'"
+    $DriveLetter = $DriveLetter + ":"
 
     if ($CurrentDriveLetter -ne $DriveLetter) {
         Write-Verbose "Changing drive letter from [$CurrentDriveLetter] to [$DriveLetter]"
+        $CurrentDrive.DriveLetter = $DriveLetter
+        Set-CimInstance -InputObject $CurrentDrive
     }
         
-    $DriveLetter = $DriveLetter + ":"
     Write-Verbose "Attaching pagefile to the new Driveletter"
     New-CimInstance -ClassName Win32_PageFileSetting -Property @{Name = "$DriveLetter\pagefile.sys"}
 
