@@ -17,6 +17,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ### 1.0.1.4
 * Fixed reboot loop when dive letter already exists
+* Added example file to module
 
 ### 1.0.1.3
 
