@@ -27,9 +27,13 @@ function Set-TargetResource
     [Parameter(Mandatory)] 
     [string]$DriveLetter   
   ) 
-    
+  
   if ($DriveLetter.Length -gt 1){$DriveLetter = $DriveLetter[0]}
   $CurrentValue = (Get-TargetResource @PSBoundParameters).DriveLetter
+
+  if ((get-ciminstance win32_volume).driveletter -contains "$($DriveLetter):"){
+    throw "Driveletter $DriveLetter is already in use!"
+  }
 
   if ($currentvalue -ne $null) {
     $pagefiles = Get-CimInstance win32_pagefilesetting
