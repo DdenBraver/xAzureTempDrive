@@ -27,9 +27,15 @@ function Set-TargetResource
     [Parameter(Mandatory)] 
     [string]$DriveLetter   
   ) 
-    
+  
   if ($DriveLetter.Length -gt 1){$DriveLetter = $DriveLetter[0]}
   $CurrentValue = (Get-TargetResource @PSBoundParameters).DriveLetter
+  $CurrentDriveLetter = (Get-CimInstance -Class Win32_LogicalDisk -Filter "VolumeName = 'Temporary Storage'").DeviceID
+  $CurrentDrive = Get-CimInstance -Class win32_volume -Filter "DriveLetter = '$($CurrentDriveLetter)'"
+
+  if (((get-ciminstance win32_volume).driveletter -contains "$($DriveLetter):") -and ($CurrentDriveLetter -ne "$($DriveLetter):")){
+    throw "Driveletter $DriveLetter is already in use!"
+  }
 
   if ($currentvalue -ne $null) {
     $pagefiles = Get-CimInstance win32_pagefilesetting
@@ -40,8 +46,6 @@ function Set-TargetResource
   }
 
   else {
-    $CurrentDriveLetter = (Get-CimInstance -Class Win32_LogicalDisk -Filter "VolumeName = 'Temporary Storage'").DeviceID
-    $CurrentDrive = Get-CimInstance -Class win32_volume -Filter "DriveLetter = '$($CurrentDriveLetter)'"
     $DriveLetter = $DriveLetter + ":"
 
     if ($CurrentDriveLetter -ne $DriveLetter) {
