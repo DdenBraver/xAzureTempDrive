@@ -1,14 +1,14 @@
 ﻿# Find out if we are on a VM that has a temporary drive can be moved
 # e.g. DS1 series has a temp drive, while DS2 series does not
 function hasTemporaryDrive {
-  $pageFileDrive = Get-CimInstance -ClassName win32_pagefilesetting | Select-Object -Property Name -ExpandProperty Name
-  if ($pageFileDrive -ieq 'C:\') {
-    # Page file is on C: drive so unsupported sku
-    return $false
-  } else {
-    # Page file not on C: drive so using sku with temporary drives
-    return $true
+  # Check to see if there are any disks labelled as Temporary Storage
+  $volumes = Get-Volume
+  foreach ($volume in $volumes) {
+      if ($volume.FileSystemLabel -eq "Temporary Storage") {
+          return $true
+      }
   }
+  return $false
 }
 
 function Get-TargetResource 
