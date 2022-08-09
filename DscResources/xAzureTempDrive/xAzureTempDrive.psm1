@@ -42,7 +42,8 @@ function Set-TargetResource
   ) 
 
   # Check to see if we are on a sku that can have drive re-mapped
-  if(hasTemporaryDrive -eq $false) {
+  $hasTempDrive = hasTemporaryDrive
+  if($hasTempDrive -eq $false) {
     Write-Verbose "Not-supported sku for drive re-mapping"
     return $true
   }
@@ -91,7 +92,8 @@ function Test-TargetResource
   ) 
 
   # Check to see if we are on a sku that can have drive re-mapped
-  if(hasTemporaryDrive -eq $false) {
+  $hasTempDrive = hasTemporaryDrive
+  if($hasTempDrive -eq $false) {
     Write-Verbose "Not-supported sku for drive re-mapping"
     return $true
   }
