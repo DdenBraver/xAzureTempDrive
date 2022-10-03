@@ -1,4 +1,17 @@
-﻿function Get-TargetResource 
+﻿# Find out if we are on a VM that has a temporary drive can be moved
+# e.g. DS1 series has a temp drive, while DS2 series does not
+function hasTemporaryDrive {
+  # Check to see if there are any disks labelled as Temporary Storage
+  $volumes = Get-Volume
+  foreach ($volume in $volumes) {
+      if ($volume.FileSystemLabel -eq "Temporary Storage") {
+          return $true
+      }
+  }
+  return $false
+}
+
+function Get-TargetResource 
 {    
   [OutputType([System.Collections.Hashtable])] 
   param 
@@ -27,6 +40,13 @@ function Set-TargetResource
     [Parameter(Mandatory)] 
     [string]$DriveLetter   
   ) 
+
+  # Check to see if we are on a sku that can have drive re-mapped
+  $hasTempDrive = hasTemporaryDrive
+  if($hasTempDrive -eq $false) {
+    Write-Verbose "Not-supported sku for drive re-mapping"
+    return $true
+  }
   
   if ($DriveLetter.Length -gt 1){$DriveLetter = $DriveLetter[0]}
   $CurrentValue = (Get-TargetResource @PSBoundParameters).DriveLetter
@@ -70,6 +90,13 @@ function Test-TargetResource
     [Parameter(Mandatory)] 
     [string]$DriveLetter
   ) 
+
+  # Check to see if we are on a sku that can have drive re-mapped
+  $hasTempDrive = hasTemporaryDrive
+  if($hasTempDrive -eq $false) {
+    Write-Verbose "Not-supported sku for drive re-mapping"
+    return $true
+  }
   
   Write-Verbose -Message 'Testing Pagefile Driveletter assignment'    
   if ($DriveLetter.Length -gt 1){$DriveLetter = $DriveLetter[0]}
