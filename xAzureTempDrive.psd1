@@ -21,7 +21,7 @@ GUID = '70751ff0-8c7f-478d-8d36-dfa9398b4b1c'
 Author = 'Danny den Braver'
 
 # Company or vendor of this module
-CompanyName = 'Methos'
+CompanyName = 'denBraver.com'
 
 # Copyright statement for this module
 Copyright = '(c) 2017 Danny den Braver. All rights reserved.'
