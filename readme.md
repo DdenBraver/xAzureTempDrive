@@ -15,6 +15,9 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ## Versions
 
+### 1.0.1.6
+* Add support for New Azure VM's that do not have a temporary disk ( thanks to: @sg3-141-592 )
+
 ### 1.0.1.5
 * Fixed reboot loop when dive letter already exists
 * Added example file to module
