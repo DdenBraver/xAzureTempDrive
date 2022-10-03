@@ -1,6 +1,6 @@
 ﻿# Find out if we are on a VM that has a temporary drive can be moved
 # e.g. DS1 series has a temp drive, while DS2 series does not
-function hasTemporaryDrive {
+function Find-TemporaryDrive {
   # Check to see if there are any disks labelled as Temporary Storage
   $volumes = Get-Volume
   foreach ($volume in $volumes) {
@@ -42,7 +42,7 @@ function Set-TargetResource
   ) 
 
   # Check to see if we are on a sku that can have drive re-mapped
-  $hasTempDrive = hasTemporaryDrive
+  $hasTempDrive = Find-TemporaryDrive
   if($hasTempDrive -eq $false) {
     Write-Verbose "Not-supported sku for drive re-mapping"
     return $true
