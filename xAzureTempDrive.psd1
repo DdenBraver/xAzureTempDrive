@@ -12,7 +12,7 @@
 # RootModule = ''
 
 # Version number of this module.
-ModuleVersion = '1.0.1.6'
+ModuleVersion = '1.0.2.0'
 
 # ID used to uniquely identify this module
 GUID = '70751ff0-8c7f-478d-8d36-dfa9398b4b1c'
@@ -24,7 +24,7 @@ Author = 'Danny den Braver'
 CompanyName = 'denBraver.com'
 
 # Copyright statement for this module
-Copyright = '(c) 2017 Danny den Braver. All rights reserved.'
+Copyright = '(c) 2017-2024 Danny den Braver. All rights reserved.'
 
 # Description of the functionality provided by this module
 Description = 'DSC Module to change the driveletter of a Azure VirtualMachine'
@@ -78,7 +78,7 @@ VariablesToExport = '*'
 AliasesToExport = '*'
 
 # DSC resources to export from this module
-# DscResourcesToExport = @()
+DscResourcesToExport = '*'
 
 # List of all modules packaged with this module
 # ModuleList = @()
@@ -117,4 +117,3 @@ PrivateData = @{
 # DefaultCommandPrefix = ''
 
 }
-
